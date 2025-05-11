@@ -5,7 +5,9 @@ PlayerPersistence<public> := module:
         Player.IsActive[]
         var NewDataMap: [string]string = PlayerPersistenceMap[Player].DataMap or map{}
         set NewDataMap[Key] = Value
-        set PlayerPersistenceMap[Player] = persistent_player_data { DataMap := NewDataMap }
+        NewPersistentData := persistent_player_data { DataMap := NewDataMap }
+        FitsInPlayerMap[NewPersistentData]
+        set PlayerPersistenceMap[Player] = NewPersistentData
 
     (Player: player).GetSaved<public>(Key: string)<transacts><decides>: string =
         Player.IsActive[]
